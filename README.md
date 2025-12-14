@@ -18,6 +18,7 @@ Instead of manually writing HTML for every new project or blog post, I utilize a
 3.  **Formats** it for the frontend.
 4.  **Saves** it to the SQLite database upon approval.
 
+---
 ## ✨ Key Features
 
 * **🧠 Intelligent Orchestrator:** Uses `LangChain` and `Pydantic` to enforce strict JSON schemas, ensuring the AI never breaks the UI layout.
@@ -29,6 +30,7 @@ Instead of manually writing HTML for every new project or blog post, I utilize a
     * **About Me:** AI-generated bio updates based on skills and experience.
 * **📜 History Logging:** Automatically logs all generated content to a local `history.txt` file (UTF-8 supported) for backup.
 
+---
 ## 🛠️ Tech Stack
 
 * **Backend:** Flask (Python)
@@ -37,27 +39,28 @@ Instead of manually writing HTML for every new project or blog post, I utilize a
 * **Frontend:** HTML5, Jinja2, Bootstrap 5, Custom CSS
 * **Validation:** Pydantic (for structured AI output)
 
-
+---
 ## 🚀 Installation & Setup
 
 ### 1. Clone the Repository
-```bash
 git clone [https://github.com/yourusername/agentic-portfolio.git](https://github.com/yourusername/agentic-portfolio.git)
 cd agentic-portfolio
 
+
+---
 ### 2. Create Virtual Environment
 
-```bash
 python -m venv venv
 # Windows
 venv\Scripts\activate
 # Mac/Linux
 source venv/bin/activate
-3. Install Dependencies
-Bash
+
+### 3. Install Dependencies
 
 pip install -r requirements.txt
-4. Configure Environment Variables
+
+### 4. Configure Environment Variables
 Create a .env file in the root directory:
 
 Ini, TOML
@@ -65,14 +68,14 @@ Ini, TOML
 GEMINI_API_KEY=your_google_api_key_here
 FLASK_SECRET_KEY=your_random_secret_key
 ADMIN_PASSWORD=your_secure_password
-5. Run the Application
-Bash
+
+### 5. Run the Application
 
 python app.py
 Visit http://127.0.0.1:5000 in your browser.
 
-🕹️ How to Use the Agent
-Navigate to /admin and log in.
+## 🕹️ How to Use the Agent
+### Navigate to /admin and log in.
 
 To Add a Project:
 
@@ -93,7 +96,6 @@ Prompt: "Update my about section. I am now focusing on Agentic Workflows and Gen
 Result: The Agent rewrites the bio and updates the skills tags.
 
 📂 Project Structure
-Plaintext
 
 Portfolio/
 ├── data/               # SQLite DB and History logs
