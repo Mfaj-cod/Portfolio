@@ -78,6 +78,17 @@ def generate_api():
 def save_content():
     data = request.json
     content_type = data.get('type', 'blog') # Default to blog
+
+    try:
+        with open('data/history.txt', 'a', encoding='utf-8') as file:
+            file.write(f"--- NEW ENTRY ({content_type}) ---\n")
+            file.write(f"Title: {data.get('title', 'No Title')}\n")
+            file.write(f"Tags: {data.get('tags', '')}\n")
+            file.write(f"Content:\n{data.get('content', '')}\n")
+            file.write("-" * 30 + "\n\n")
+    except Exception as e:
+        print(f"Warning: Could not save to history.txt: {e}")
+
     
     conn = get_db_connection()
     try:

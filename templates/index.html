@@ -83,14 +83,14 @@
 
 <section id="projects" class="py-5">
     <div class="container">
-        <h2 class="fw-bold section-title mb-5">Featured Projects</h2>
+        <h2 class="fw-bold section-title mb-5">Projects</h2>
         <div class="row g-4">
             
             {% for project in projects %}
             <div class="col-md-4">
                 <div class="card card-dark h-100 border-0 hover-card position-relative">
                     
-                    <a href="{{ project.link if project.link else '#' }}" target="_blank" class="project-github-link" title="View Source Code">
+                    <a href="{{ project.link if project.link else 'https://github.com/Mfaj-cod/' }}" target="_blank" class="project-github-link" title="View Source Code">
                         <i class="fab fa-github"></i>
                     </a>
 
