@@ -96,8 +96,7 @@ Prompt: "Update my about section. I am now focusing on Agentic Workflows and Gen
 Result: The Agent rewrites the bio and updates the skills tags.
 
 📂 Project Structure
-plaintext
-
+```bash
 Portfolio/
 ├── data/               # SQLite DB and History logs
 ├── src/
@@ -114,7 +113,7 @@ Portfolio/
 ├── app.py              # Main Flask Application
 ├── requirements.txt    # Dependencies
 └── README.md           # Documentation
-
+```
 🤝 Contributing
 Feel free to fork this repository and customize the system_prompt in src/agent.py to give the AI your own unique writing style!
 
