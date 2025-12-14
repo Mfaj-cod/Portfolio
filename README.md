@@ -96,6 +96,7 @@ Prompt: "Update my about section. I am now focusing on Agentic Workflows and Gen
 Result: The Agent rewrites the bio and updates the skills tags.
 
 📂 Project Structure
+plaintext
 
 Portfolio/
 ├── data/               # SQLite DB and History logs
