@@ -21,7 +21,7 @@ class ContentDraft(BaseModel):
     content: str = Field(description="HTML content. For projects, describe features. For about, write the bio.")
     tags: str = Field(description="Comma-separated strings. Tech stack for projects, skills for about, topics for blogs.")
 
-# Initialize model ---
+# Initialize model
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash", 
     temperature=0.7,
