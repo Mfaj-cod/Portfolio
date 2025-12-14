@@ -9,12 +9,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev")
-ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin")
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 
 # Ensure DB is ready
 db_setup()
 
+# decorator function
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -39,6 +40,7 @@ def home():
 
     return render_template('index.html', blogs=blogs, projects=projects, profile=profile)
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -48,10 +50,12 @@ def login():
         flash('Invalid password')
     return render_template('login.html')
 
+
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('home'))
+
 
 @app.route('/admin')
 @login_required
@@ -59,7 +63,6 @@ def admin():
     return render_template('admin.html')
 
 # --- API ---
-
 @app.route('/api/generate', methods=['POST'])
 @login_required
 def generate_api():
@@ -68,6 +71,7 @@ def generate_api():
     if draft:
         return jsonify(draft)
     return jsonify({"error": "Agent failed"}), 500
+
 
 @app.route('/api/save', methods=['POST'])
 @login_required

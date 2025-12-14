@@ -7,7 +7,7 @@
         <p class="lead mb-4 text-secondary">AI Engineer & Full Stack Developer</p>
         <div class="d-flex justify-content-center gap-3">
             <a href="#projects" class="btn btn-light btn-lg rounded-pill px-4 fw-bold">View Work</a>
-            <a href="https://github.com" target="_blank" class="btn btn-outline-light btn-lg rounded-pill px-4"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://github.com/Mfaj-cod/" target="_blank" class="btn btn-outline-light btn-lg rounded-pill px-4"><i class="fab fa-github"></i> GitHub</a>
         </div>
     </div>
 </header>
@@ -83,8 +83,9 @@
 
 <section id="projects" class="py-5">
     <div class="container">
-        <h2 class="fw-bold section-title mb-5">Projects</h2>
+        <h2 class="fw-bold section-title mb-5">Featured Projects</h2>
         <div class="row g-4">
+            
             {% for project in projects %}
             <div class="col-md-4">
                 <div class="card card-dark h-100 border-0 hover-card position-relative">
@@ -96,19 +97,55 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start mb-3">
                             <div class="rounded-circle bg-white bg-opacity-10 p-3 d-inline-flex">
-                                <i class="fas fa-laptop-code fa-2x text-light"></i>
+                                <i class="fas fa-laptop-code fa-2x text-main"></i>
                             </div>
                         </div>
                         <h5 class="card-title fw-bold text-light">{{ project.title }}</h5>
-                        <p class="card-text text-secondary small">
-                            {{ project.description | striptags | truncate(150) }}
-                        </p>
+                        
+                        <div class="card-text text-secondary small text-truncate-3">
+                            {{ project.description | striptags | truncate(120) }}
+                        </div>
                     </div>
+
                     <div class="card-footer border-0 pt-0 bg-transparent">
-                        <div class="d-flex flex-wrap gap-2 mb-3">
+                        <div class="mb-3 d-flex flex-wrap gap-2">
+                            {% if project.tech_stack %}
+                                {% for tech in project.tech_stack.split(',')[:3] %} 
+                                <span class="badge bg-secondary bg-opacity-25 border border-secondary">{{ tech.strip() }}</span>
+                                {% endfor %}
+                                {% if project.tech_stack.split(',')|length > 3 %}
+                                <span class="badge bg-secondary bg-opacity-25">+{{ project.tech_stack.split(',')|length - 3 }}</span>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+
+                        <button class="btn btn-link px-0 text-main fw-bold text-decoration-none" data-bs-toggle="modal" data-bs-target="#projectModal{{ project.id }}">
+                            Read More <i class="fas fa-arrow-right ms-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="projectModal{{ project.id }}" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content card-dark">
+                        <div class="modal-header border-secondary">
+                            <div>
+                                <h5 class="modal-title fw-bold text-light">{{ project.title }}</h5>
+                                {% if project.link %}
+                                <a href="{{ project.link }}" target="_blank" class="small text-muted"><i class="fab fa-github me-1"></i>View Repo</a>
+                                {% endif %}
+                            </div>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body text-secondary">
+                            {{ project.description | safe }}
+                        </div>
+                        <div class="modal-footer border-secondary justify-content-start">
+                            <strong>Tech Stack:</strong>
                             {% if project.tech_stack %}
                                 {% for tech in project.tech_stack.split(',') %}
-                                <span class="badge bg-secondary bg-opacity-25 border border-secondary">{{ tech.strip() }}</span>
+                                <span class="badge bg-light text-dark">{{ tech.strip() }}</span>
                                 {% endfor %}
                             {% endif %}
                         </div>
@@ -117,9 +154,10 @@
             </div>
             {% else %}
             <div class="col-12 text-center text-muted">
-                <p>No projects found.</p>
+                <p>No projects found. Ask the Agent to add one!</p>
             </div>
             {% endfor %}
+
         </div>
     </div>
 </section>

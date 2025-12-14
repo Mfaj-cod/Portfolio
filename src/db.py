@@ -45,12 +45,6 @@ def setup():
     );
     ''')
     
-    # Optional: Seed initial profile if empty so the site isn't blank
-    cur.execute("SELECT count(*) FROM profile")
-    if cur.fetchone()[0] == 0:
-        cur.execute("INSERT INTO profile (bio, skills) VALUES (?, ?)", 
-                   ("I am an AI Engineer. (Update this via Admin)", "Python, AI, Web"))
-
     conn.commit()
     conn.close()
     logger.info(f"Database initialized at {DB_PATH}")
