@@ -37,24 +37,6 @@ Instead of manually writing HTML for every new project or blog post, I utilize a
 * **Frontend:** HTML5, Jinja2, Bootstrap 5, Custom CSS
 * **Validation:** Pydantic (for structured AI output)
 
-## 📂 Project Structure
-```bash
-Portfolio/
-├── data/               # SQLite DB and History logs
-├── src/
-│   ├── agent.py        # LangChain logic & Pydantic models
-│   ├── db.py           # Database connection & setup
-│   ├── logg.py         # Logging configuration
-├── static/
-│   └── style.css       # Custom dark theme & animations
-├── templates/
-│   ├── base.html       # Master layout (Navbar/Footer)
-│   ├── index.html      # Public Portfolio View
-│   ├── admin.html      # Private AI Dashboard
-│   └── login.html      # Auth Page
-├── app.py              # Main Flask Application
-├── requirements.txt    # Dependencies
-└── README.md           # Documentation
 
 ## 🚀 Installation & Setup
 
