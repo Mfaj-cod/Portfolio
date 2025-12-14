@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="hero-section d-flex align-items-center mb-5">
+    <div class="container text-center py-5">
+        <h1 class="display-4 fw-bold mb-3 hero-title">Building Intelligence</h1>
+        <p class="lead mb-4 text-secondary">AI Engineer & Full Stack Developer</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="#projects" class="btn btn-light btn-lg rounded-pill px-4 fw-bold">View Work</a>
+            <a href="https://github.com" target="_blank" class="btn btn-outline-light btn-lg rounded-pill px-4"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+    </div>
+</header>
+
+<section id="about" class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <div class="card card-dark border-0 p-4 h-100">
+                    <h2 class="fw-bold section-title mb-4">About Me</h2>
+                    <div class="text-secondary lead fs-6">
+                        {{ profile.bio | safe }}
+                    </div>
+                    <div class="mt-4">
+                        <h6 class="text-uppercase small fw-bold text-light mb-3">Skills</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% if profile.skills %}
+                                {% for skill in profile.skills.split(',') %}
+                                <span class="badge bg-dark border border-secondary text-light">{{ skill.strip() }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <i class="fas fa-brain fa-10x text-secondary opacity-25"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="blog" class="py-5">
+    <div class="container">
+        <h2 class="fw-bold section-title mb-5">Blogs</h2>
+        <div class="row g-4">
+            {% for blog in blogs %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 card-dark hover-card">
+                    <div class="card-body">
+                        {% set first_tag = blog.tags.split(',')[0] if blog.tags else 'Tech' %}
+                        <span class="badge mb-2 bg-light text-dark fw-bold">{{ first_tag }}</span>
+                        <h5 class="card-title fw-bold text-light mt-2">{{ blog.title }}</h5>
+                        <div class="card-text text-secondary small text-truncate-3">
+                            {{ blog.content | striptags | truncate(100) }}
+                        </div>
+                    </div>
+                    <div class="card-footer border-0 pt-0 bg-transparent">
+                        <button class="btn btn-link px-0 text-light fw-bold text-decoration-none" data-bs-toggle="modal" data-bs-target="#blogModal{{ blog.id }}">
+                            Read More <i class="fas fa-arrow-right ms-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="blogModal{{ blog.id }}" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content card-dark">
+                        <div class="modal-header border-secondary">
+                            <h5 class="modal-title fw-bold text-light">{{ blog.title }}</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body text-secondary">
+                            {{ blog.content | safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="projects" class="py-5">
+    <div class="container">
+        <h2 class="fw-bold section-title mb-5">Projects</h2>
+        <div class="row g-4">
+            {% for project in projects %}
+            <div class="col-md-4">
+                <div class="card card-dark h-100 border-0 hover-card position-relative">
+                    
+                    <a href="{{ project.link if project.link else '#' }}" target="_blank" class="project-github-link" title="View Source Code">
+                        <i class="fab fa-github"></i>
+                    </a>
+
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="rounded-circle bg-white bg-opacity-10 p-3 d-inline-flex">
+                                <i class="fas fa-laptop-code fa-2x text-light"></i>
+                            </div>
+                        </div>
+                        <h5 class="card-title fw-bold text-light">{{ project.title }}</h5>
+                        <p class="card-text text-secondary small">
+                            {{ project.description | striptags | truncate(150) }}
+                        </p>
+                    </div>
+                    <div class="card-footer border-0 pt-0 bg-transparent">
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            {% if project.tech_stack %}
+                                {% for tech in project.tech_stack.split(',') %}
+                                <span class="badge bg-secondary bg-opacity-25 border border-secondary">{{ tech.strip() }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12 text-center text-muted">
+                <p>No projects found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

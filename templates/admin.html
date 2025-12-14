@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Admin | Agentic CMS{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4 mt-5">
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="card card-dark mb-3">
+                <div class="card-body">
+                    <h6 class="text-uppercase small fw-bold text-muted">System Status</h6>
+                    <div class="d-flex align-items-center mt-2">
+                        <div class="status-indicator bg-success me-2 rounded-circle" style="width:10px; height:10px;"></div>
+                        <span class="fw-bold small">LangChain Core: Online</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="card card-dark mb-4">
+                <div class="card-header border-0 pt-4">
+                    <h4><i class="fas fa-magic text-gradient me-2"></i>Orchestrate Your Content</h4>
+                    <p class="text-secondary small">
+                        Say "It's a project about..." or "Update my about section..." or just describe a blog topic.
+                    </p>
+                </div>
+                <div class="card-body">
+                    <textarea class="form-control mb-3" id="agentPrompt" rows="3" placeholder="Ex: Add a new project called 'CryptoBot' that uses Python and Binance API..."></textarea>
+                    <div class="text-end">
+                        <button class="btn btn-primary px-4" id="btnGenerate">
+                            <i class="fas fa-bolt me-2"></i>Generate
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-dark">
+                <div class="card-header border-0">
+                    <h5 class="mb-0">Draft Preview <span class="badge ms-2" id="typeBadge">waiting...</span></h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="small fw-bold text-secondary">Title / Section</label>
+                        <input type="text" class="form-control" id="draftTitle">
+                    </div>
+                    <div class="mb-3">
+                        <label class="small fw-bold text-secondary">Tags / Tech Stack</label>
+                        <input type="text" class="form-control" id="draftTags">
+                    </div>
+                    <div class="mb-3">
+                        <label class="small fw-bold text-secondary">Content</label>
+                        <div id="draftContentPreview" class="p-3 border rounded" style="min-height: 200px; background: #000;">
+                            <em class="text-muted">Agent output will appear here...</em>
+                        </div>
+                        <input type="hidden" id="draftContentHidden">
+                        <input type="hidden" id="draftType">
+                    </div>
+                </div>
+                <div class="card-footer border-0 text-end">
+                    <button class="btn btn-success" id="btnSave"><i class="fas fa-save me-2"></i>Publish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const btnGenerate = document.getElementById('btnGenerate');
+    const btnSave = document.getElementById('btnSave');
+
+    btnGenerate.addEventListener('click', async () => {
+        const prompt = document.getElementById('agentPrompt').value;
+        if(!prompt) return alert("Enter a prompt");
+
+        btnGenerate.disabled = true;
+        btnGenerate.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Thinking...';
+
+        try {
+            const res = await fetch('/api/generate', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({prompt})
+            });
+            const data = await res.json();
+            
+            if(data.error) throw new Error(data.error);
+
+            // Fill UI
+            document.getElementById('draftTitle').value = data.title;
+            document.getElementById('draftTags').value = data.tags;
+            document.getElementById('draftContentHidden').value = data.content;
+            document.getElementById('draftContentPreview').innerHTML = data.content;
+            
+            // Set Type
+            document.getElementById('draftType').value = data.type;
+            const badge = document.getElementById('typeBadge');
+            badge.innerText = data.type.toUpperCase();
+            
+            // Color code the badge
+            if(data.type === 'project') badge.className = 'badge bg-warning text-dark ms-2';
+            else if(data.type === 'about') badge.className = 'badge bg-info text-dark ms-2';
+            else badge.className = 'badge bg-primary ms-2';
+
+        } catch (e) {
+            alert(e.message);
+        } finally {
+            btnGenerate.disabled = false;
+            btnGenerate.innerHTML = '<i class="fas fa-bolt me-2"></i> Generate';
+        }
+    });
+
+    btnSave.addEventListener('click', async () => {
+        const title = document.getElementById('draftTitle').value;
+        const tags = document.getElementById('draftTags').value;
+        const content = document.getElementById('draftContentHidden').value;
+        const type = document.getElementById('draftType').value;
+
+        const res = await fetch('/api/save', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({title, tags, content, type})
+        });
+        
+        const data = await res.json();
+        if(data.status === 'success') {
+            alert(data.type.toUpperCase() + ' Saved!');
+            window.location.href = '/';
+        } else {
+            alert('Error: ' + data.error);
+        }
+    });
+</script>
+{% endblock %}

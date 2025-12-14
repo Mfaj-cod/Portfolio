@@ -1,0 +1,11 @@
+langgraph
+langchain
+langchain-community
+jupyter
+langgraph-cli[inmem]
+langchain-mcp-adapters
+langchain-google-genai
+mcp
+pydantic
+flask
+langchain_core
