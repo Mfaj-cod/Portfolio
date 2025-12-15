@@ -9,3 +9,4 @@ mcp
 pydantic
 flask
 langchain_core
+gunicorn
