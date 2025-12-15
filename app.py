@@ -4,6 +4,7 @@ from functools import wraps
 from flask import Flask, request, jsonify, render_template, session, redirect, url_for, flash
 from src.agent import generate_blog_draft
 from src.db import get_db_connection, setup as db_setup
+from src.logg import logger
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -62,7 +63,7 @@ def logout():
 def admin():
     return render_template('admin.html')
 
-# --- API ---
+# API
 @app.route('/api/generate', methods=['POST'])
 @login_required
 def generate_api():
@@ -87,7 +88,7 @@ def save_content():
             file.write(f"Content:\n{data.get('content', '')}\n")
             file.write("-" * 30 + "\n\n")
     except Exception as e:
-        print(f"Warning: Could not save to history.txt: {e}")
+        logger.error(f"Warning: Could not save to history.txt: {e}")
 
     
     conn = get_db_connection()

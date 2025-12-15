@@ -28,6 +28,9 @@
                 <div class="card-body">
                     <textarea class="form-control mb-3" id="agentPrompt" rows="3" placeholder="Ex: Add a new project called 'CryptoBot' that uses Python and Binance API..."></textarea>
                     <div class="text-end">
+                        <button type="button" id="voice-btn" class="btn btn-dark border border-secondary" style="width: 50px; margin-right: 10px;" onclick="startDictation()" title="Use Voice">
+                            <i class="fas fa-microphone text-white"></i>
+                        </button>
                         <button class="btn btn-primary px-4" id="btnGenerate">
                             <i class="fas fa-bolt me-2"></i>Generate
                         </button>
@@ -132,5 +135,57 @@
             alert('Error: ' + data.error);
         }
     });
+
+    function startDictation() {
+    // Check for browser support (Chrome/Edge use webkit, others use standard)
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+        var recognition = new SpeechRecognition();
+
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = "en-US";
+        
+        // Visual feedback
+        var micBtn = document.getElementById('voice-btn');
+        var originalIcon = '<i class="bi bi-mic"></i>'; // Or whatever icon class you use
+        micBtn.innerHTML = "🔴"; 
+
+        recognition.start();
+
+        recognition.onresult = function(e) {
+            var transcript = e.results[0][0].transcript;
+            
+            // 2. FIX: Target the correct textarea ID ('agentPrompt')
+            var promptBox = document.getElementById('agentPrompt');
+            
+            // Optional: Append to existing text instead of overwriting
+            if (promptBox.value.length > 0) {
+                promptBox.value += " " + transcript;
+            } else {
+                promptBox.value = transcript;
+            }
+            
+            recognition.stop();
+            micBtn.innerHTML = "🎙️"; // Clear red dot
+            // re-add icon if needed, or just leave blank if button has CSS icon
+        };
+
+        recognition.onerror = function(e) {
+            console.error(e);
+            micBtn.innerHTML = "🎙️"; 
+            alert("Voice Error: " + e.error);
+            recognition.stop();
+        };
+        
+        recognition.onend = function() {
+             micBtn.innerHTML = "🎙️"; // Reset button
+        };
+
+    } else {
+        alert("Sorry, your browser does not support voice recognition. Try Google Chrome.");
+    }
+}
 </script>
 {% endblock %}
