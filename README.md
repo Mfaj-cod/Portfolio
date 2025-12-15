@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)
 ![Flask](https://img.shields.io/badge/Flask-2.3-black?style=for-the-badge&logo=flask)
 ![LangChain](https://img.shields.io/badge/LangChain-🦜️🔗-green?style=for-the-badge)
-![Gemini](https://img.shields.io/badge/AI-Gemini%201.5%20Flash-8E75B2?style=for-the-badge)
+![Gemini](https://img.shields.io/badge/AI-Gemini%202.5%20Flash-8E75B2?style=for-the-badge)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple?style=for-the-badge&logo=bootstrap)
 
 ## 📖 Overview
