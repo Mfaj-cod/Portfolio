@@ -58,10 +58,15 @@ def logout():
     return redirect(url_for('home'))
 
 
+
 @app.route('/admin')
 @login_required
 def admin():
-    return render_template('admin.html')
+    conn = get_db_connection()
+    blogs = conn.execute("SELECT * FROM blogs ORDER BY created_at DESC").fetchall()
+    projects = conn.execute("SELECT * FROM projects ORDER BY created_at DESC").fetchall()
+    conn.close()
+    return render_template('admin.html', blogs=blogs, projects=projects)
 
 # API
 @app.route('/api/generate', methods=['POST'])
@@ -119,6 +124,25 @@ def save_content():
     except Exception as e:
         conn.close()
         return jsonify({"error": str(e)}), 500
+
+# Delete Route
+@app.route('/api/delete/<content_type>/<int:item_id>', methods=['POST'])
+@login_required
+def delete_item(content_type, item_id):
+    conn = get_db_connection()
+    try:
+        if content_type == 'blog':
+            conn.execute("DELETE FROM blogs WHERE id = ?", (item_id,))
+        elif content_type == 'project':
+            conn.execute("DELETE FROM projects WHERE id = ?", (item_id,))
+        
+        conn.commit()
+        return jsonify({"status": "success"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        conn.close()
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

@@ -22,11 +22,12 @@ Instead of manually writing HTML for every new project or blog post, I utilize a
 ## ✨ Key Features
 
 * **🧠 Intelligent Orchestrator:** Uses `LangChain` and `Pydantic` to enforce strict JSON schemas, ensuring the AI never breaks the UI layout.
-* **🎨 Monochrome Premium UI:** A sleek, high-contrast dark theme built with Bootstrap 5 and custom CSS gradients.
+* **🎤 Voice Command Integration:** Integrated **Web Speech API** in the Admin Dashboard, allowing you to dictate prompts and manage content hands-free.
+* **🎨 Monochrome Premium UI:** A sleek, high-contrast dark theme built with Bootstrap 5, custom CSS gradients, and technical grid backgrounds.
 * **🔐 Secure Admin Panel:** Protected route with session-based authentication to manage content.
 * **📂 Dynamic Content:**
-    * **Projects:** Auto-formatted cards with "Read More" modals and GitHub links.
-    * **Blogs:** Technical articles structured with HTML headers and lists.
+    * **Smart Project Parsing:** Paste raw `README.md` text, and the Agent converts Markdown into clean HTML cards with "Read More" modals and floating GitHub links.
+    * **Blogs:** Technical articles structured with HTML headers, code blocks, and lists.
     * **About Me:** AI-generated bio updates based on skills and experience.
 * **📜 History Logging:** Automatically logs all generated content to a local `history.txt` file (UTF-8 supported) for backup.
 
@@ -36,7 +37,7 @@ Instead of manually writing HTML for every new project or blog post, I utilize a
 * **Backend:** Flask (Python)
 * **Database:** SQLite (Native JSON storage)
 * **AI Logic:** LangChain, Google Generative AI (Gemini 1.5 Flash)
-* **Frontend:** HTML5, Jinja2, Bootstrap 5, Custom CSS
+* **Frontend:** HTML5, Jinja2, Bootstrap 5, Custom CSS, **Web Speech API**
 * **Validation:** Pydantic (for structured AI output)
 
 ---
