@@ -13,7 +13,7 @@ app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 
-# Ensure DB is ready
+# Ensuring DB is ready
 db_setup()
 
 # decorator function
@@ -29,7 +29,7 @@ def login_required(f):
 @app.route('/')
 def home():
     conn = get_db_connection()
-    # Fetch all data dynamically
+
     blogs = conn.execute("SELECT * FROM blogs ORDER BY created_at DESC").fetchall()
     projects = conn.execute("SELECT * FROM projects ORDER BY created_at DESC").fetchall()
     profile = conn.execute("SELECT * FROM profile ORDER BY id DESC LIMIT 1").fetchone()
@@ -106,7 +106,7 @@ def save_content():
                 (data['title'], data['content'], data['tags'])
             )
         elif content_type == 'about':
-            # Create a new profile entry (we always fetch the latest one)
+            # A new profile (always fetch the latest one)
             cur.execute(
                 "INSERT INTO profile (bio, skills) VALUES (?, ?)",
                 (data['content'], data['tags'])
