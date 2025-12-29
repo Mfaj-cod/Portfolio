@@ -10,7 +10,7 @@
 
 ## 📖 Overview
 
-This is not just a static portfolio—it is a **Business-Ready Agentic Content Management System**.
+This is not just a static portfolio, it is a **Business-Ready Agentic Content Management System**.
 
 Instead of manually editing code, I utilize a **LangChain-based AI Agent** to manage my website. Through a secure Admin Dashboard, I can dictate or type natural language prompts to update projects, write blogs, or modify my bio. The system also handles **Client Inquiries**, allowing potential employers or clients to contact me directly through a secure form.
 
