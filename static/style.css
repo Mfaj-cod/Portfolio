@@ -145,20 +145,106 @@ body::after {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 40vw; /* Massive size */
-    color: rgba(81, 81, 81, 0.03); /* Very subtle opacity */
-    z-index: -1; /* Behind everything */
+    font-size: 45vw; /* Massive size */
+    color: rgba(99, 102, 241, 0.08); /* Very subtle opacity */
+    z-index: 0; /* Behind everything */
     pointer-events: none; /* Let clicks pass through */
     animation: pulse-brain 10s ease-in-out infinite alternate;
 }
 
 @keyframes pulse-brain {
-    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.03; }
-    100% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.06; }
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.08; }
+    100% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.12; }
 }
 
 /* Make sure cards have backgrounds so text remains readable over the icon */
 .card-dark {
     background: transparent !important; /* Slightly more opaque */
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(10px);
+}
+
+/* ============================================
+   MOBILE OPTIMIZATIONS (Max-width: 768px)
+   ============================================ */
+
+@media (max-width: 767.98px) {
+
+    /* --- 1. Tame Typography --- */
+    /* Shrink giant hero text */
+    .display-4, .hero-title {
+        font-size: 2.5rem !important; 
+    }
+
+    /* Shrink section titles */
+    h2, .section-title {
+        font-size: 1.8rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    /* Slightly smaller body text */
+    body, p, .lead {
+        font-size: 1rem !important;
+    }
+
+    /* --- 2. Reduce Section Spacing --- */
+    /* Bootstrap's py-5 is too big on mobile. Reduce vertical gaps. */
+    section.py-5, footer.py-4 {
+        padding-top: 2.5rem !important;
+        padding-bottom: 2.5rem !important;
+    }
+
+    /* --- 3. Compact Hero Section --- */
+    .hero-section {
+        /* Reduce padding, keep space for navbar */
+        padding-top: 90px !important; 
+        padding-bottom: 2rem !important;
+    }
+    
+    /* On very small screens, stack the hero buttons vertically */
+    .hero-section .d-flex.justify-content-center.gap-3 {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .hero-section .btn-lg {
+        width: 100%; /* Full width buttons for easier tapping */
+        font-size: 1.1rem !important;
+    }
+
+    /* --- 4. Compact Cards (About, Projects, Services) --- */
+    /* Override large padding (like p-4 or p-5) on cards */
+    .card-dark, .card-body {
+        padding: 1.25rem !important;
+    }
+
+    /* Specifically target the About Me card which had p-5 */
+    #about .card-dark {
+        padding: 1.5rem !important;
+    }
+
+    /* Shrink icons in Services section */
+    .fa-3x {
+        font-size: 2rem !important;
+    }
+
+    /* --- 5. Adjust Background Brain Icon --- */
+    /* It's too dominating on narrow screens. Reduce size and opacity. */
+    body::after {
+        font-size: 80vw !important; /* Use viewport width units so it fits width */
+        top: 40% !important;
+        opacity: 0.05; /* Make it fainter on mobile to improve text readability */
+        color: rgba(99, 102, 241, 0.05) !important;
+    }
+}
+
+/* ============================================
+   EXTRA SMALL MOBILE (Max-width: 400px)
+   ============================================ */
+/* Adjustments for very narrow phones (e.g., older iPhones, foldables closed) */
+@media (max-width: 400px) {
+    .display-4, .hero-title {
+        font-size: 2rem !important;
+    }
 }
