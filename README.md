@@ -1,6 +1,6 @@
 # 🤖 Agentic CMS Portfolio
 
-> A self-updating portfolio website powered by **LangChain** and **Google Gemini**.
+> A self-updating portfolio & business website powered by **LangChain** and **Google Gemini**.
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)
 ![Flask](https://img.shields.io/badge/Flask-2.3-black?style=for-the-badge&logo=flask)
@@ -10,35 +10,39 @@
 
 ## 📖 Overview
 
-This is not a static portfolio. It is an **Agentic Content Management System**. 
+This is not just a static portfolio—it is a **Business-Ready Agentic Content Management System**.
 
-Instead of manually writing HTML for every new project or blog post, I utilize a **LangChain-based AI Agent**. Through a secure Admin Dashboard, I provide natural language prompts (e.g., *"Add a project about Leaf Disease Detection using CNNs"*), and the Agent:
-1.  **Analyzes** the intent (Blog vs. Project vs. Bio).
-2.  **Generates** structured content (HTML, Tags, Links).
-3.  **Formats** it for the frontend.
-4.  **Saves** it to the SQLite database upon approval.
+Instead of manually editing code, I utilize a **LangChain-based AI Agent** to manage my website. Through a secure Admin Dashboard, I can dictate or type natural language prompts to update projects, write blogs, or modify my bio. The system also handles **Client Inquiries**, allowing potential employers or clients to contact me directly through a secure form.
 
----
 ## ✨ Key Features
 
-* **🧠 Intelligent Orchestrator:** Uses `LangChain` and `Pydantic` to enforce strict JSON schemas, ensuring the AI never breaks the UI layout.
-* **🎤 Voice Command Integration:** Integrated **Web Speech API** in the Admin Dashboard, allowing you to dictate prompts and manage content hands-free.
-* **🎨 Monochrome Premium UI:** A sleek, high-contrast dark theme built with Bootstrap 5, custom CSS gradients, and technical grid backgrounds.
-* **🔐 Secure Admin Panel:** Protected route with session-based authentication to manage content.
-* **📂 Dynamic Content:**
-    * **Smart Project Parsing:** Paste raw `README.md` text, and the Agent converts Markdown into clean HTML cards with "Read More" modals and floating GitHub links.
-    * **Blogs:** Technical articles structured with HTML headers, code blocks, and lists.
-    * **About Me:** AI-generated bio updates based on skills and experience.
-* **📜 History Logging:** Automatically logs all generated content to a local `history.txt` file (UTF-8 supported) for backup.
+### 🤖 AI & Automation
+* **Intelligent Orchestrator:** Uses `LangChain` and `Pydantic` to analyze intent (Blog vs. Project vs. Bio) and generate structured HTML content.
+* **Smart Parsing:** Paste raw `README.md` text, and the Agent converts it into clean, formatted Project Cards with "Read More" modals.
+* **🎤 Voice Command:** Integrated **Web Speech API** allows hands-free content generation in the Admin Panel.
+
+### 💼 Business Tools
+* **Client Inbox:** A built-in "Contact Me" form on the public site sends messages directly to a private **Admin Inbox** table in the dashboard.
+* **Services Section:** Dedicated area to showcase professional services (AI Dev, Full Stack, Data Vision).
+
+### 🎨 UI & UX
+* **Premium Monochrome Theme:** A high-contrast dark aesthetic with technical grid backgrounds and a dynamic **Brain Watermark** animation.
+* **📱 Fully Responsive:** Optimized typography and layout for seamless viewing on mobile devices and tablets.
+* **Dynamic Content:** Auto-updating Blogs, Projects, and About sections.
+
+### 🔐 Security & Data
+* **Role-Based Access:** Session-protected Admin routes.
+* **History Logging:** Automatically logs all AI-generated content to a local `history.txt` (UTF-8) for backup.
 
 ---
 ## 🛠️ Tech Stack
 
 * **Backend:** Flask (Python)
-* **Database:** SQLite (Native JSON storage)
-* **AI Logic:** LangChain, Google Generative AI (Gemini 1.5 Flash)
-* **Frontend:** HTML5, Jinja2, Bootstrap 5, Custom CSS, **Web Speech API**
+* **Database:** SQLite (Native JSON storage + Messages Table)
+* **AI Logic:** LangChain, Google Generative AI (Gemini 2.5 Flash)
+* **Frontend:** HTML5, Jinja2, Bootstrap 5, Custom CSS, Web Speech API
 * **Validation:** Pydantic (for structured AI output)
+
 
 ---
 ## 🚀 Installation & Setup
