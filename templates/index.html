@@ -13,37 +13,9 @@
     </div>
 </header>
 
-<section id="about" class="py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6 mb-4 mb-md-0">
-                <div class="card card-dark border-0 p-4 h-100">
-                    <h2 class="fw-bold section-title mb-4">About Me</h2>
-                    <div class="text-secondary lead fs-6">
-                        {{ profile.bio | safe }}
-                    </div>
-                    <div class="mt-4">
-                        <h6 class="text-uppercase small fw-bold text-light mb-3">Skills</h6>
-                        <div class="d-flex flex-wrap gap-2">
-                            {% if profile.skills %}
-                                {% for skill in profile.skills.split(',') %}
-                                <span class="badge bg-dark border border-secondary text-light">{{ skill.strip() }}</span>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 text-center">
-                <i class="fas fa-brain fa-10x text-secondary opacity-25"></i>
-            </div>
-        </div>
-    </div>
-</section>
-
 <section id="services" class="py-5">
     <div class="container">
-        <h2 class="fw-bold section-title mb-5">My Services</h2>
+        <h2 class="fw-bold section-title mb-5 text-center">My Services</h2>
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="card card-dark h-100 border-0 p-4 hover-card text-center">
@@ -75,6 +47,35 @@
         </div>
     </div>
 </section>
+
+
+<section id="about" class="py-5 position-relative">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card card-dark border-0 p-5 shadow-lg">
+                    <h2 class="fw-bold section-title mb-4 text-center">About Me</h2>
+                    
+                    <div class="text-secondary lead fs-5 text-center mb-4">
+                        {{ profile.bio | safe }}
+                    </div>
+                    
+                    <div class="text-center mt-5">
+                        <h6 class="text-uppercase small fw-bold text-light mb-3 letter-spacing-2">Tech Stack & Skills</h6>
+                        <div class="d-flex flex-wrap justify-content-center gap-2">
+                            {% if profile.skills %}
+                                {% for skill in profile.skills.split(',') %}
+                                <span class="badge badge-modern">{{ skill.strip() }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <section id="contact" class="py-5 mb-5">
     <div class="container">
@@ -113,7 +114,7 @@
 
 <section id="blog" class="py-5">
     <div class="container">
-        <h2 class="fw-bold section-title mb-5">Blogs</h2>
+        <h2 class="fw-bold section-title mb-5 text-center">Blogs</h2>
         <div class="row g-4">
             {% for blog in blogs %}
             <div class="col-md-4">
@@ -153,7 +154,7 @@
 
 <section id="projects" class="py-5">
     <div class="container">
-        <h2 class="fw-bold section-title mb-5">Projects</h2>
+        <h2 class="fw-bold section-title mb-5 text-center">Projects</h2>
         <div class="row g-4">
             
             {% for project in projects %}
