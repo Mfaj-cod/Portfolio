@@ -2,6 +2,7 @@ import os
 import sqlite3
 from functools import wraps
 from flask import Flask, request, jsonify, render_template, session, redirect, url_for, flash
+import smtplib
 from src.agent import generate_blog_draft
 from src.db import get_db_connection, setup as db_setup
 from src.logg import logger
@@ -12,6 +13,8 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
+COMPAMY_EMAIL = os.getenv("COMPANY_EMAIL")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
 # Ensuring DB is ready
 db_setup()
@@ -65,8 +68,10 @@ def admin():
     conn = get_db_connection()
     blogs = conn.execute("SELECT * FROM blogs ORDER BY created_at DESC").fetchall()
     projects = conn.execute("SELECT * FROM projects ORDER BY created_at DESC").fetchall()
+    # Fetch messages
+    messages = conn.execute("SELECT * FROM messages ORDER BY created_at DESC").fetchall()
     conn.close()
-    return render_template('admin.html', blogs=blogs, projects=projects)
+    return render_template('admin.html', blogs=blogs, projects=projects, messages=messages)
 
 # API
 @app.route('/api/generate', methods=['POST'])
@@ -77,6 +82,47 @@ def generate_api():
     if draft:
         return jsonify(draft)
     return jsonify({"error": "Agent failed"}), 500
+
+# contact form api
+@app.route('/api/contact', methods=['POST'])
+def contact_form():
+    data = request.json
+    name = data.get('name')
+    email = data.get('email')
+    message = data.get('message')
+
+    if not name or not email or not message:
+        return jsonify({"error": "All fields are required"}), 400
+    else:
+        msg = f"New contact form submission:\n\nName: {name}\nEmail: {email}\nMessage:\n{message}"
+
+    conn = get_db_connection()
+    try:
+        conn.execute(
+            "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)",
+            (name, email, message)
+        )
+        conn.commit()
+        
+        try:
+            with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+                connection.starttls()
+                connection.login(COMPAMY_EMAIL, EMAIL_PASSWORD)
+                connection.sendmail(
+                    from_addr=COMPAMY_EMAIL,
+                    to_addrs=COMPAMY_EMAIL,
+                    msg=msg.encode('utf-8')
+                )
+            logger.info("Contact form email sent successfully.")
+        except Exception as e:
+            logger.error(f"Failed to send email notification: {e}")
+
+        return jsonify({"status": "success"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+    finally:
+        conn.close()
 
 
 @app.route('/api/save', methods=['POST'])
