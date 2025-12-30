@@ -24,7 +24,7 @@ class ContentDraft(BaseModel):
 # Initialize model
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash", 
-    temperature=0.5,
+    temperature=0.6,
     api_key=GOOGLE_API_KEY
 )
 
